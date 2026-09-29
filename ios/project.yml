@@ -1,0 +1,45 @@
+name: PocketBoy
+options:
+  bundleIdPrefix: dev.pocketboy
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    TARGETED_DEVICE_FAMILY: "1"
+    IPHONEOS_DEPLOYMENT_TARGET: "16.0"
+    GENERATE_INFOPLIST_FILE: NO
+    INFOPLIST_FILE: Info.plist
+    SWIFT_OBJC_BRIDGING_HEADER: App/PocketBoy-Bridging-Header.h
+    HEADER_SEARCH_PATHS:
+      - $(inherited)
+      - $(SRCROOT)/CoreBridge
+      - $(SRCROOT)/Vendor/SameBoy/Core
+    GCC_PREPROCESSOR_DEFINITIONS:
+      - $(inherited)
+      - GB_INTERNAL
+      - GB_VERSION=\"1.0.3\"
+      - GB_COPYRIGHT_YEAR=\"2026\"
+      - _GNU_SOURCE
+    CLANG_C_LANGUAGE_STANDARD: gnu11
+    CLANG_ENABLE_MODULES: YES
+    ENABLE_PREVIEWS: YES
+targets:
+  PocketBoy:
+    type: application
+    platform: iOS
+    sources:
+      - path: App
+        excludes:
+          - PocketBoy-Bridging-Header.h
+      - path: CoreBridge
+      - path: Vendor/SameBoy/Core
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.pocketboy.app
+        PRODUCT_NAME: PocketBoy
+        INFOPLIST_KEY_UIUserInterfaceStyle: Light
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        CODE_SIGN_STYLE: Automatic
+        SWIFT_EMIT_LOC_STRINGS: YES

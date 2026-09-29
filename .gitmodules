@@ -1,0 +1,3 @@
+[submodule "sameboy"]
+	path = ios/Vendor/SameBoy
+	url = https://github.com/LIJI32/SameBoy.git

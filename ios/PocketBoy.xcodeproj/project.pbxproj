@@ -1,0 +1,66 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10000000000000000000001 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000004 /* UIKit.framework */; };
+		A10000000000000000000002 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000005 /* SwiftUI.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A10000000000000000000003 /* PocketBoy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PocketBoy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10000000000000000000004 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		A10000000000000000000005 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		A10000000000000000000006 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		A10000000000000000000007 /* App */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (); explicitFileTypes = {}; explicitFolders = (); path = App; sourceTree = "<group>"; };
+		A10000000000000000000008 /* CoreBridge */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (); explicitFileTypes = {}; explicitFolders = (); path = CoreBridge; sourceTree = "<group>"; };
+		A10000000000000000000009 /* SameBoy Core */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (); explicitFileTypes = {}; explicitFolders = (); path = Vendor/SameBoy/Core; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A1000000000000000000000A /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (A10000000000000000000001 /* UIKit.framework in Frameworks */, A10000000000000000000002 /* SwiftUI.framework in Frameworks */, ); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A1000000000000000000000B = {isa = PBXGroup; children = (A10000000000000000000007 /* App */, A10000000000000000000008 /* CoreBridge */, A10000000000000000000009 /* SameBoy Core */, A10000000000000000000006 /* Info.plist */, A1000000000000000000000C /* Products */, A1000000000000000000000D /* Frameworks */, ); sourceTree = "<group>"; };
+		A1000000000000000000000C /* Products */ = {isa = PBXGroup; children = (A10000000000000000000003 /* PocketBoy.app */, ); name = Products; sourceTree = "<group>"; };
+		A1000000000000000000000D /* Frameworks */ = {isa = PBXGroup; children = (A10000000000000000000004 /* UIKit.framework */, A10000000000000000000005 /* SwiftUI.framework */, ); name = Frameworks; sourceTree = "<group>"; };
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A1000000000000000000000E /* PocketBoy */ = {isa = PBXNativeTarget; buildConfigurationList = A1000000000000000000000F /* Build configuration list for PBXNativeTarget "PocketBoy" */; buildPhases = (A10000000000000000000010 /* Sources */, A1000000000000000000000A /* Frameworks */, A10000000000000000000011 /* Resources */, ); buildRules = (); dependencies = (); fileSystemSynchronizedGroups = (A10000000000000000000007 /* App */, A10000000000000000000008 /* CoreBridge */, A10000000000000000000009 /* SameBoy Core */, ); name = PocketBoy; productName = PocketBoy; productReference = A10000000000000000000003 /* PocketBoy.app */; productType = "com.apple.product-type.application"; };
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A10000000000000000000012 /* Project object */ = {isa = PBXProject; attributes = {BuildIndependentTargetsInParallel = 1; LastUpgradeCheck = 1600; TargetAttributes = {A1000000000000000000000E = {CreatedOnToolsVersion = 16.0; }; }; }; buildConfigurationList = A10000000000000000000013 /* Build configuration list for PBXProject "PocketBoy" */; compatibilityVersion = "Xcode 16.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base, ); mainGroup = A1000000000000000000000B; productRefGroup = A1000000000000000000000C /* Products */; projectDirPath = ""; projectRoot = ""; targets = (A1000000000000000000000E /* PocketBoy */, ); };
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A10000000000000000000011 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A10000000000000000000010 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A10000000000000000000014 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {CLANG_C_LANGUAGE_STANDARD = gnu11; CLANG_ENABLE_MODULES = YES; CODE_SIGN_STYLE = Automatic; ENABLE_PREVIEWS = YES; GCC_PREPROCESSOR_DEFINITIONS = ("$(inherited)", GB_INTERNAL, "GB_VERSION=\\\"1.0.3\\\"", "GB_COPYRIGHT_YEAR=\\\"2026\\\"", _GNU_SOURCE, ); HEADER_SEARCH_PATHS = ("$(inherited)", "$(SRCROOT)/CoreBridge", "$(SRCROOT)/Vendor/SameBoy/Core", ); INFOPLIST_FILE = Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 16.0; PRODUCT_BUNDLE_IDENTIFIER = dev.pocketboy.app; PRODUCT_NAME = PocketBoy; SWIFT_OBJC_BRIDGING_HEADER = App/PocketBoy-Bridging-Header.h; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = 1; GENERATE_INFOPLIST_FILE = NO; }; name = Debug; };
+		A10000000000000000000015 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {CLANG_C_LANGUAGE_STANDARD = gnu11; CLANG_ENABLE_MODULES = YES; CODE_SIGN_STYLE = Automatic; ENABLE_PREVIEWS = YES; GCC_PREPROCESSOR_DEFINITIONS = ("$(inherited)", GB_INTERNAL, "GB_VERSION=\\\"1.0.3\\\"", "GB_COPYRIGHT_YEAR=\\\"2026\\\"", _GNU_SOURCE, ); HEADER_SEARCH_PATHS = ("$(inherited)", "$(SRCROOT)/CoreBridge", "$(SRCROOT)/Vendor/SameBoy/Core", ); INFOPLIST_FILE = Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 16.0; PRODUCT_BUNDLE_IDENTIFIER = dev.pocketboy.app; PRODUCT_NAME = PocketBoy; SWIFT_OBJC_BRIDGING_HEADER = App/PocketBoy-Bridging-Header.h; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = 1; GENERATE_INFOPLIST_FILE = NO; }; name = Release; };
+		A10000000000000000000016 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; CLANG_WARN_DOCUMENTATION_COMMENTS = YES; CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES; CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE; GCC_C_LANGUAGE_STANDARD = gnu11; GCC_NO_COMMON_BLOCKS = YES; MACOSX_DEPLOYMENT_TARGET = 13.0; SDKROOT = iphoneos; }; name = Debug; };
+		A10000000000000000000017 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; CLANG_WARN_DOCUMENTATION_COMMENTS = YES; CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES; CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE; GCC_C_LANGUAGE_STANDARD = gnu11; GCC_NO_COMMON_BLOCKS = YES; MACOSX_DEPLOYMENT_TARGET = 13.0; SDKROOT = iphoneos; }; name = Release; };
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A1000000000000000000000F /* Build configuration list for PBXNativeTarget "PocketBoy" */ = {isa = XCConfigurationList; buildConfigurations = (A10000000000000000000014 /* Debug */, A10000000000000000000015 /* Release */, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		A10000000000000000000013 /* Build configuration list for PBXProject "PocketBoy" */ = {isa = XCConfigurationList; buildConfigurations = (A10000000000000000000016 /* Debug */, A10000000000000000000017 /* Release */, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+/* End XCConfigurationList section */
+
+	};
+	rootObject = A10000000000000000000012 /* Project object */;
+}

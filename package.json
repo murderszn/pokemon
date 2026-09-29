@@ -6,6 +6,7 @@
     "gen": "tsx scripts/gen-data.ts",
     "setup": "bash scripts/setup.sh",
     "start": "tsx src/server/main.ts",
+    "play": "tsx src/server/play.ts",
     "headless": "tsx src/server/main.ts --headless",
     "resume": "tsx src/server/main.ts --resume",
     "typecheck": "tsc"

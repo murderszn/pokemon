@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Play Pokémon Red — Pocket</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --page: #14171b;
+    --ink: #edf1f4;
+    --muted: #93a0ad;
+    --silver: #cfd0d6;
+    --silver-deep: #b4b5bc;
+    --silver-edge: #8e8f96;
+    --silver-ink: #33353b;
+    --silver-faint: #6d6e75;
+    --bezel: #232329;
+    --key: #2e3239;
+    --key-dark: #171a1f;
+    --red: #c8324b;
+    --panel: #1a2027;
+    --line: #2a333d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; background: var(--page); color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .top {
+    width: min(96vw, 460px); display: flex; align-items: baseline; gap: 10px;
+    padding: 20px 4px 12px;
+  }
+  .top h1 { font-size: 19px; margin: 0; font-weight: 700; letter-spacing: .01em; }
+  .top h1 small { display: block; font-size: 12px; font-weight: 500; color: var(--muted); }
+  .conn { margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--muted); white-space: nowrap; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: #e0a63c; flex: none; }
+  .dot.on { background: #3ecf6e; }
+  .dot.off { background: #e05252; }
+
+  /* Silver pocket body */
+  .pocket {
+    width: min(96vw, 460px); background: var(--silver); color: var(--silver-ink);
+    border-radius: 20px 20px 64px 20px; padding: 20px 20px 26px;
+    border: 1px solid var(--silver-edge);
+    box-shadow: inset 2px 2px 0 #e8e9ed, inset -3px -4px 0 var(--silver-deep);
+  }
+  .power-row { display: flex; align-items: center; gap: 8px; margin: 0 4px 10px; }
+  .led { width: 9px; height: 9px; border-radius: 50%; background: #6e2a30; flex: none; }
+  .led.on { background: #ff4438; box-shadow: 0 0 6px rgba(255, 68, 56, .8); }
+  .power-row span { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 10px; letter-spacing: .14em; color: var(--silver-faint); }
+
+  .screen-bezel { background: var(--bezel); border-radius: 12px 12px 40px 12px; padding: 22px 20px 26px; }
+  .screen-wrap { position: relative; border-radius: 4px; overflow: hidden; background: #000; border: 2px solid #0c0d10; }
+  canvas {
+    display: block; width: 100%; aspect-ratio: 160 / 144;
+    image-rendering: pixelated; image-rendering: crisp-edges; background: #000;
+  }
+  canvas.green { filter: sepia(1) saturate(2.6) hue-rotate(52deg) brightness(.92) contrast(1.04); }
+  .screen-wrap::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: repeating-linear-gradient(to bottom, rgba(255,255,255,.03) 0 1px, transparent 1px 3px);
+  }
+  .brand { margin-top: 12px; font-size: 13px; font-style: italic; color: #3a3f8f; }
+  .brand b { color: #7d3a5e; font-style: normal; }
+
+  .controls { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-top: 22px; }
+  .dpad { display: grid; grid-template-columns: repeat(3, 40px); grid-template-rows: repeat(3, 34px); flex: none; }
+  .dpad button {
+    background: var(--key); color: #c9d0d8; border: 1px solid var(--key-dark);
+    cursor: pointer; font-size: 12px; touch-action: none; padding: 0;
+  }
+  .dpad [data-button="UP"] { grid-area: 1 / 2; border-radius: 5px 5px 0 0; border-bottom: 0; }
+  .dpad [data-button="LEFT"] { grid-area: 2 / 1; border-radius: 5px 0 0 5px; border-right: 0; }
+  .dpad .core { grid-area: 2 / 2; background: #242931; border-top: 1px solid var(--key-dark); border-bottom: 1px solid var(--key-dark); }
+  .dpad .core::after { content: ""; display: block; width: 12px; height: 12px; margin: 10px auto 0; border-radius: 50%; background: #14171c; }
+  .dpad [data-button="RIGHT"] { grid-area: 2 / 3; border-radius: 0 5px 5px 0; border-left: 0; }
+  .dpad [data-button="DOWN"] { grid-area: 3 / 2; border-radius: 0 0 5px 5px; border-top: 0; }
+  .dpad button:active, .dpad button.pressed { background: #4a545f; color: #fff; }
+
+  .sys { display: flex; gap: 12px; padding-top: 44px; transform: rotate(-25deg); }
+  .sys button {
+    border: 1px solid #83848b; background: #b9bac1; color: #4a4b52;
+    border-radius: 999px; width: 52px; height: 18px; font-size: 0; cursor: pointer; touch-action: none;
+    box-shadow: 0 2px 0 var(--silver-edge);
+  }
+  .sys button:active, .sys button.pressed { box-shadow: none; transform: translateY(2px); background: #a3a4ab; }
+  .sys figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .sys figcaption { font-size: 9px; font-weight: 700; letter-spacing: .12em; color: var(--silver-faint); transform: rotate(25deg); }
+
+  .ab { display: flex; gap: 12px; flex: none; padding-top: 6px; }
+  .ab figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+  .ab figure:last-child { margin-top: -14px; }
+  .ab button {
+    width: 54px; height: 54px; border-radius: 50%; cursor: pointer; touch-action: none;
+    background: var(--key); border: 1px solid var(--key-dark); border-bottom-width: 4px;
+    color: #dfe4ea; font-size: 16px; font-weight: 700;
+    box-shadow: inset 2px 2px 0 rgba(255,255,255,.12);
+  }
+  .ab button:active, .ab button.pressed { border-bottom-width: 1px; transform: translateY(2px); background: #3d434c; }
+  .ab figcaption { font-size: 11px; font-weight: 700; letter-spacing: .1em; color: var(--silver-faint); }
+
+  .speaker { display: flex; justify-content: flex-end; gap: 5px; margin-top: 18px; }
+  .speaker i { display: block; width: 5px; height: 44px; background: var(--silver-deep); border-radius: 3px; transform: rotate(-24deg); box-shadow: inset 1px 1px 0 #e4e5ea; }
+
+  #message { min-height: 1.4em; margin: 10px 4px 0; font-size: 12.5px; color: var(--silver-faint); text-align: center; }
+
+  .panel { width: min(96vw, 460px); margin: 14px 0 28px; border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; background: var(--panel); }
+  .panel-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .panel button {
+    border: 1px solid #3a4550; background: #232c36; color: var(--ink);
+    border-radius: 8px; padding: 8px 14px; font: inherit; font-size: 13px; cursor: pointer;
+  }
+  .panel button:hover { border-color: #5b6b7a; }
+  .panel button[aria-pressed="true"] { border-color: #3ecf6e; color: #3ecf6e; }
+  .keys { display: flex; gap: 6px 14px; flex-wrap: wrap; margin-top: 12px; font-size: 12.5px; color: var(--muted); }
+  kbd {
+    font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 11px;
+    border: 1px solid #3a4550; border-bottom-width: 2px; border-radius: 5px; padding: 1px 6px; color: var(--ink); background: #232c36;
+  }
+  @media (max-width: 420px) {
+    .pocket { padding: 14px 14px 20px; }
+    .dpad { grid-template-columns: repeat(3, 36px); grid-template-rows: repeat(3, 31px); }
+    .ab button { width: 50px; height: 50px; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>Pokémon Red<small>Silver Pocket &middot; playable in your browser</small></h1>
+  <div class="conn"><span class="dot" id="dot"></span><span id="conn">Connecting…</span></div>
+</header>
+
+<main class="pocket" id="console">
+  <div class="power-row"><span class="led" id="led"></span><span>POWER</span></div>
+  <div class="screen-bezel">
+    <div class="screen-wrap"><canvas id="screen" width="160" height="144" aria-label="Game Boy screen"></canvas></div>
+    <div class="brand"><b>POCKET</b> BOY</div>
+  </div>
+
+  <div class="controls">
+    <div class="dpad" role="group" aria-label="Direction pad">
+      <button data-button="UP" aria-label="Up">▲</button>
+      <button data-button="LEFT" aria-label="Left">◀</button>
+      <div class="core"></div>
+      <button data-button="RIGHT" aria-label="Right">▶</button>
+      <button data-button="DOWN" aria-label="Down">▼</button>
+    </div>
+    <div class="sys">
+      <figure><button data-button="SELECT" aria-label="Select">&nbsp;</button><figcaption>SELECT</figcaption></figure>
+      <figure><button data-button="START" aria-label="Start">&nbsp;</button><figcaption>START</figcaption></figure>
+    </div>
+    <div class="ab">
+      <figure><button data-button="B" aria-label="B">B</button><figcaption>B</figcaption></figure>
+      <figure><button data-button="A" aria-label="A">A</button><figcaption>A</figcaption></figure>
+    </div>
+  </div>
+  <div class="speaker" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <p id="message" role="status">Connecting…</p>
+</main>
+
+<section class="panel">
+  <div class="panel-row">
+    <button id="save" type="button">Save state</button>
+    <button id="load" type="button">Load state</button>
+    <button id="palette" type="button" aria-pressed="false">Green screen</button>
+    <button id="full" type="button">Fullscreen</button>
+  </div>
+  <div class="keys">
+    <span><kbd>←↑↓→</kbd> / <kbd>WASD</kbd> move</span>
+    <span><kbd>X</kbd> A &middot; <kbd>Z</kbd> B</span>
+    <span><kbd>Enter</kbd> Start &middot; <kbd>Shift</kbd> Select</span>
+  </div>
+</section>
+
+<script>
+const canvas = document.getElementById('screen');
+const ctx = canvas.getContext('2d');
+const image = ctx.createImageData(160, 144);
+const status = document.getElementById('message');
+const conn = document.getElementById('conn');
+const dot = document.getElementById('dot');
+const led = document.getElementById('led');
+const keys = { ArrowUp: 'UP', ArrowDown: 'DOWN', ArrowLeft: 'LEFT', ArrowRight: 'RIGHT',
+  w: 'UP', s: 'DOWN', a: 'LEFT', d: 'RIGHT', W: 'UP', S: 'DOWN', A: 'LEFT', D: 'RIGHT',
+  z: 'B', x: 'A', Z: 'B', X: 'A', Enter: 'START', Shift: 'SELECT' };
+const held = new Set();
+let socket;
+function setConn(state, text) {
+  conn.textContent = text;
+  dot.className = 'dot' + (state ? ' ' + state : '');
+  led.className = 'led' + (state === 'on' ? ' on' : '');
+}
+function send(cmd, button) { if (socket?.readyState === WebSocket.OPEN) socket.send(JSON.stringify({ cmd, button })); }
+function press(button) {
+  if (held.has(button)) return;
+  held.add(button); send('down', button);
+  document.querySelector(`[data-button="${button}"]`)?.classList.add('pressed');
+}
+function release(button) {
+  if (!held.delete(button)) return;
+  send('up', button);
+  document.querySelector(`[data-button="${button}"]`)?.classList.remove('pressed');
+}
+function releaseAll() { for (const button of [...held]) release(button); send('release'); }
+function connect() {
+  setConn('', 'Connecting…');
+  socket = new WebSocket(`ws://${location.host}`);
+  socket.binaryType = 'arraybuffer';
+  socket.onopen = () => { setConn('on', 'Connected'); status.textContent = 'Click the game, then use the keyboard or on-screen buttons.'; for (const button of held) send('down', button); };
+  socket.onmessage = (event) => {
+    if (event.data instanceof ArrayBuffer) {
+      image.data.set(new Uint8Array(event.data).subarray(0, image.data.length));
+      for (let i = 3; i < image.data.length; i += 4) image.data[i] = 255;
+      ctx.putImageData(image, 0, 0);
+    } else { status.textContent = JSON.parse(event.data).text; }
+  };
+  socket.onclose = () => { setConn('off', 'Disconnected — retrying…'); setTimeout(connect, 1000); };
+}
+window.addEventListener('keydown', (event) => {
+  if (event.key === ' ' && event.target === document.body) event.preventDefault();
+  const button = keys[event.key]; if (button) { event.preventDefault(); press(button); }
+});
+window.addEventListener('keyup', (event) => { const button = keys[event.key]; if (button) { event.preventDefault(); release(button); } });
+window.addEventListener('blur', releaseAll);
+document.addEventListener('visibilitychange', () => { if (document.hidden) releaseAll(); });
+for (const button of document.querySelectorAll('[data-button]')) {
+  button.addEventListener('pointerdown', (event) => { event.preventDefault(); button.setPointerCapture(event.pointerId); press(button.dataset.button); });
+  button.addEventListener('pointerup', () => release(button.dataset.button));
+  button.addEventListener('pointercancel', () => release(button.dataset.button));
+  button.addEventListener('lostpointercapture', () => release(button.dataset.button));
+  button.addEventListener('contextmenu', (event) => event.preventDefault());
+}
+document.getElementById('save').onclick = () => send('save');
+document.getElementById('load').onclick = () => send('load');
+const palBtn = document.getElementById('palette');
+palBtn.onclick = () => {
+  const green = canvas.classList.toggle('green');
+  palBtn.setAttribute('aria-pressed', String(green));
+  palBtn.textContent = green ? 'Full color' : 'Green screen';
+};
+document.getElementById('full').onclick = () => {
+  const el = document.getElementById('console');
+  if (document.fullscreenElement) document.exitFullscreen();
+  else el.requestFullscreen?.();
+};
+connect();
+</script>
+</body>
+</html>

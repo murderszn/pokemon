@@ -41,7 +41,7 @@ Landing page: [`site/`](site/)
 Requirements: macOS or Linux, Node 20+, and git.
 
 ```bash
-git clone https://github.com/christianmat/jev-pokemon && cd jev-pokemon
+git clone https://github.com/murderszn/pokemon && cd pokemon
 npm install
 npm run setup                 # installs rgbds (via brew), clones + builds pret/pokered, generates symbol data
 cp /path/to/your/pokered.gb roms/red.gb   # your own dump of Pokémon Red (US/EU)
@@ -66,7 +66,14 @@ npm start -- --speed 1 --resume                # continue from the latest milest
 npm start -- --speed 1 --load <save-name>      # load a specific save from saves/
 npm run headless -- --steps 3000               # max speed, logs only
 npx tsx scripts/tools/save.ts                  # save the running game (writes saves/manual-*.json)
+npm run play                                    # play yourself at http://localhost:8788
 ```
+
+The player page runs a separate game using the project's serverboy emulator. Use arrows or WASD to move, Z for B, X for A, Enter for Start, and Shift for Select. It also has on-screen controls and saves to `saves/player.json`. Its progress is separate from Jev's game.
+
+### Native iPhone app
+
+The separate SwiftUI Game Boy Pocket app lives in [`ios/`](ios/). It uses SameBoy Core and its own ROM and save files; setup and Xcode build steps are in [`ios/README.md`](ios/README.md). It requires Xcode 16 or newer and a ROM you provide.
 
 ### Logs
 
